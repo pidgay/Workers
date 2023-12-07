@@ -11,7 +11,7 @@ public class Repository {
         employees.add(e);
     }
 
-    public List<Employee> getEmployees() {
+    public static List<Employee> getEmployees() {
         return employees;
     }
 }

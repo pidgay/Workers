@@ -18,50 +18,68 @@ public class WorkersController {
         this.scanForInput = new Scanner(System.in);
     }
     public void start(){
-        startMenu();
+        Menu();
     }
-    private void startMenu(){
+    private void Menu(){
         int input;
         do {
             view.printMenu();
             input = scanForInput.nextInt();
             switch (input) {
                 case 1:
-                    startEmployeeList();
+                    EmployeeList();
                     break;
                 case 2:
-                    startAddEmployee();
+                    AddEmployee();
                     break;
                 case 3:
-                    startDeleteEmployee();
+                    DeleteEmployee();
                     break;
                 case 4:
-                    startBackup();
+                    Backup();
                 case 9:
                     break;
             }
-        } while(input != 9);
+        } while (input != 9);
     }
 
-    private void startEmployeeList(){
-
+    private void EmployeeList(){
+        try {
+            scanForInput.nextLine();
+            boolean exit = false;
+            for (Employee employee : Repository.getEmployees()) {
+                view.printEmployeeList(employee);
+                do {
+                    if (scanForInput.nextLine().equals("p")) {
+                        exit = true;
+                        break;
+                    }
+                } while (!(scanForInput.nextLine().equals("n") || scanForInput.nextLine().equals("p")));
+                if (exit || Repository.getEmployees().indexOf(employee) + 1 == Repository.getEmployees().size()) {
+                    break;
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println("There are no employees added");
+        }
     }
 
-    private void startAddEmployee() {
+    private void AddEmployee() {
         try {
             scanForInput.nextLine();
             List<String> employeeData = new ArrayList<>();
             System.out.print("[D]yrektor/[H]andlowiec: ");
-            String inputPosition;
+            String input;
             List<String> attributes;
             char pos;
 
             do {
-                inputPosition = scanForInput.nextLine();
-                pos = inputPosition.toCharArray()[0];
-            }while (!Validation.validatePosition(inputPosition));
+                input = scanForInput.nextLine();
+                pos = input.toCharArray()[0];
+            }while (!InputValidation.validatePosition(input));
 
-            if (pos == 'D'){
+            if (pos == 'd'){
                 attributes = attributesManager;
             }
             else {
@@ -73,9 +91,10 @@ public class WorkersController {
                employeeData.add(scanForInput.nextLine());
            }
 
-           if(pos == 'D'){
-               if (Validation.validateManager(employeeData)){
-                   Employee manager = new Manager(
+           Employee employee;
+           if(pos == 'd'){
+               if (InputValidation.validateManager(employeeData)){
+                    employee = new Manager(
                            employeeData.get(0),
                            employeeData.get(1),
                            employeeData.get(2),
@@ -85,12 +104,14 @@ public class WorkersController {
                            employeeData.get(6),
                            employeeData.get(7)
                    );
-                   Repository.addEmployee(manager);
+               }
+               else {
+                   throw new RuntimeException("Wrong input");
                }
            }
            else{
-               if(Validation.validateSalesman(employeeData)){
-                   Employee salesman = new Salesman(
+               if(InputValidation.validateSalesman(employeeData)){
+                   employee = new Salesman(
                            employeeData.get(0),
                            employeeData.get(1),
                            employeeData.get(2),
@@ -99,21 +120,92 @@ public class WorkersController {
                            employeeData.get(5),
                            employeeData.get(6)
                    );
-                   Repository.addEmployee(salesman);
+               }
+               else {
+                   throw new RuntimeException("Wrong input");
                }
            }
 
-
+            view.printAddEmployee(employee);
+            do {
+                input = scanForInput.nextLine();
+                if (input.equals("z")){
+                    Repository.addEmployee(employee);
+                }
+                else if (input.equals("p")){
+                    break;
+                }
+            }while (!InputValidation.validateExit(input));
         } catch (Exception e) {
-            throw new RuntimeException("");
+            System.out.println("Wrong input");
         }
     }
 
-    private void startDeleteEmployee(){
+    private void DeleteEmployee(){
+        try{
+            System.out.println("3. USUŃ PRACOWNIKA");
+            scanForInput.nextLine();
+            System.out.println("Podaj identyfikator PESEL");
+            view.separator();
+            String input = scanForInput.nextLine();
+            for (Employee employee: Repository.getEmployees()){
+                boolean exit = false;
+                if(employee.getPesel().equals(input)){
+                    view.printDeleteEmployee(employee);
+                    view.separator();
+                    System.out.println("[U] - usuń \t [P] - porzuć");
 
+                    do {
+                        if (scanForInput.nextLine().equals("u")) {
+                            Repository.getEmployees().remove(employee);
+                            exit = true;
+                            break;
+                        }
+                    } while (!(scanForInput.nextLine().equals("u") || scanForInput.nextLine().equals("p")));
+                }
+                if (exit) {
+                    break;
+                }
+            }
+        } catch (Exception e){
+            System.out.println("There no employee with given PESEL");
+        }
     }
 
-    private  void startBackup(){
+    private  void Backup(){
+        try{
+            scanForInput.nextLine();
+            System.out.println("4. KOPIA ZAPASOWA");
+            System.out.println("[Z]achowaj/[O]dtwórz\t:");
+            String input;
+            boolean flagOperation;
+            boolean flagCompressionType;
+            String fileName;
+            do {
+                if (scanForInput.nextLine().equals("z")) {
+                    flagOperation = true;
+                }
+                else if (scanForInput.nextLine().equals("o")){
+                    flagOperation = false;
+                }
+            } while (!(scanForInput.nextLine().equals("z") || scanForInput.nextLine().equals("o")));
 
+            do {
+                if (scanForInput.nextLine().equals("g")) {
+                    flagCompressionType = true;
+                }
+                else if (scanForInput.nextLine().equals("z")){
+                    flagCompressionType = false;
+                }
+            } while (!(scanForInput.nextLine().equals("g") || scanForInput.nextLine().equals("z")));
+
+            System.out.println("Nazwa pliku: ");
+            fileName = scanForInput.nextLine();
+
+            //BackupService.start(flagOperation,flagCompressionType,fileName);
+        }
+        catch (Exception e){
+            System.out.println("error");
+        }
     }
 }

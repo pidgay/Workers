@@ -1,7 +1,5 @@
 package model;
 
-import model.Employee;
-
 public class Salesman extends Employee {
     private int commission;
     private int commissionLimit;

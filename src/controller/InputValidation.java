@@ -2,11 +2,13 @@ package controller;
 
 import java.util.List;
 
-public class Validation {
+public class InputValidation {
 
     public static boolean validatePosition(String str){
-        return str.equals("D") || str.equals("H");
+        return str.equals("d") || str.equals("h");
     }
+
+    public static boolean validateExit(String str) { return str.equals("z") || str.equals("p");}
     public static boolean validateManager(List<String> managerData){
         try{
         validatePesel(managerData.get(0));
@@ -46,7 +48,10 @@ public class Validation {
     }
 
     private static void validateInt(String str){
-            int val = Integer.parseInt(str);
+
+        if (!(str != null && str.matches("[0-9.]+"))){
+            throw new RuntimeException("Input is not numeric");
+        }
     }
 
     private static void validatePesel(String str){
@@ -61,14 +66,14 @@ public class Validation {
     }
 
     private static void validateCard(String str){
-        if (!str.matches("\b[[0-9]{3}-]{2}[0-9]]{2}-[0-9]{3}\b")) {
+        if (!str.matches("[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{3}")) {
             throw new IllegalArgumentException("Wrong card number");
         }
     }
 
     private static void validatePhone(String str){
-        if (!str.matches("\b[0-9]{9}\b")) {
-            throw new IllegalArgumentException("Wrong card number");
+        if (!str.matches("[0-9]{9}")) {
+            throw new IllegalArgumentException("Wrong phone number");
         }
     }
 }
