@@ -10,6 +10,9 @@ abstract public class Employee {
     private int salary;
     private int phone;
 
+    public Employee(){
+
+    }
     public Employee(String pesel, String name, String surname, String salary, String phone){
         this.pesel = pesel;
         this.name = name;

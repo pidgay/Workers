@@ -1,9 +1,14 @@
 package model;
 
-public class Manager extends Employee {
+import java.io.Serializable;
+
+public class Manager extends Employee  implements Serializable {
     private int bonus;
     private String card;
     private int cardLimit;
+    public Manager(){
+
+    }
     public Manager(
             String pesel, String name, String surname, String salary, String phone,
             String bonus, String card, String cardLimit

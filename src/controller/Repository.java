@@ -1,11 +1,13 @@
 package controller;
 
 import model.Employee;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository {
-    private static final List<Employee> employees = new ArrayList<>();
+public class Repository implements Serializable {
+    private static List<Employee> employees = new ArrayList<>();
 
     public static void addEmployee(Employee e) {
         employees.add(e);
@@ -13,5 +15,9 @@ public class Repository {
 
     public static List<Employee> getEmployees() {
         return employees;
+    }
+
+    public static void setEmployees(List<Employee> e){
+        employees = e;
     }
 }

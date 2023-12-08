@@ -174,35 +174,40 @@ public class WorkersController {
 
     private  void Backup(){
         try{
-            scanForInput.nextLine();
-            System.out.println("4. KOPIA ZAPASOWA");
-            System.out.println("[Z]achowaj/[O]dtwórz\t:");
             String input;
-            boolean flagOperation;
-            boolean flagCompressionType;
+            boolean flagOperation = false;
+            boolean flagCompressionType = false;
             String fileName;
-            do {
-                if (scanForInput.nextLine().equals("z")) {
-                    flagOperation = true;
-                }
-                else if (scanForInput.nextLine().equals("o")){
-                    flagOperation = false;
-                }
-            } while (!(scanForInput.nextLine().equals("z") || scanForInput.nextLine().equals("o")));
 
+            System.out.println("4. KOPIA ZAPASOWA");
+            System.out.println("[Z]achowaj / [O]dtwórz\t:");
             do {
-                if (scanForInput.nextLine().equals("g")) {
+                input = scanForInput.nextLine();
+                if (input.equals("z")) {
+                    flagOperation = true;
+                    break;
+                }
+                else if (input.equals("o")){
+                    break;
+                }
+            } while (true);
+
+            System.out.println("[G]zip / [Z]ip\t:");
+            do {
+                input = scanForInput.nextLine();
+                if (input.equals("g")) {
                     flagCompressionType = true;
+                    break;
                 }
-                else if (scanForInput.nextLine().equals("z")){
-                    flagCompressionType = false;
+                else if (input.equals("z")){
+                    break;
                 }
-            } while (!(scanForInput.nextLine().equals("g") || scanForInput.nextLine().equals("z")));
+            } while (true);
 
             System.out.println("Nazwa pliku: ");
             fileName = scanForInput.nextLine();
 
-            //BackupService.start(flagOperation,flagCompressionType,fileName);
+            BackupService.start(flagOperation,flagCompressionType,fileName);
         }
         catch (Exception e){
             System.out.println("error");
