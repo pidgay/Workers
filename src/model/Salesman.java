@@ -5,9 +5,7 @@ import java.io.Serializable;
 public class Salesman extends Employee implements Serializable {
     private int commission;
     private int commissionLimit;
-    public Salesman(){
 
-    }
     public Salesman(
             String pesel, String name, String surname, String salary, String phone,
             String commission, String commissionLimit

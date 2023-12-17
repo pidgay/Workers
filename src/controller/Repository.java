@@ -7,7 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repository implements Serializable {
-    private static List<Employee> employees = new ArrayList<>();
+    private static List<Employee> employees;
+
+    public Repository(){
+        Repository.employees = new ArrayList<>();
+    }
+
+    public Repository(List<Employee> employees){
+        Repository.employees = employees;
+    }
 
     public static void addEmployee(Employee e) {
         employees.add(e);
@@ -18,6 +26,6 @@ public class Repository implements Serializable {
     }
 
     public static void setEmployees(List<Employee> e){
-        employees = e;
+        Repository.employees = e;
     }
 }
