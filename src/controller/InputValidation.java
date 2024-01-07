@@ -33,7 +33,7 @@ public class InputValidation {
             validateString(salesmanData.get(2));
             validateInt(salesmanData.get(3));
             validatePhone(salesmanData.get(4));
-            validateInt(salesmanData.get(5));
+            validateCommission(salesmanData.get(5));
             validateInt(salesmanData.get(6));
             return true;
         }
@@ -74,6 +74,14 @@ public class InputValidation {
     private static void validatePhone(String str){
         if (!str.matches("[0-9]{9}")) {
             throw new IllegalArgumentException("Wrong phone number");
+        }
+    }
+
+    private static void validateCommission(String str){
+        validateInt(str);
+        int commission = Integer.parseInt(str);
+        if (commission < 0 || commission > 100){
+            throw new IllegalArgumentException("Wrong argument: percentage out of range");
         }
     }
 }

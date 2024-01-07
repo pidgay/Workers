@@ -1,18 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.lang.String;
 
-abstract public class Employee {
+abstract public class Employee implements Serializable {
     private String pesel;
     private String name;
     private String surname;
-
     private int salary;
     private int phone;
 
-    public Employee(){
-
-    }
     public Employee(String pesel, String name, String surname, String salary, String phone){
         this.pesel = pesel;
         this.name = name;

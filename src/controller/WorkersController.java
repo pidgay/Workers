@@ -192,18 +192,18 @@ public class WorkersController {
                 }
             } while (true);
 
-            System.out.println("[G]zip / [Z]ip\t:");
-            do {
-                input = scanForInput.nextLine();
-                if (input.equals("g")) {
-                    flagCompressionType = true;
-                    break;
-                }
-                else if (input.equals("z")){
-                    break;
-                }
-            } while (true);
-
+            if (flagOperation) {
+                System.out.println("[G]zip / [Z]ip\t:");
+                do {
+                    input = scanForInput.nextLine();
+                    if (input.equals("g")) {
+                        flagCompressionType = true;
+                        break;
+                    } else if (input.equals("z")) {
+                        break;
+                    }
+                } while (true);
+            }
             System.out.println("Nazwa pliku: ");
             fileName = scanForInput.nextLine();
 
