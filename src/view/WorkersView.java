@@ -2,7 +2,6 @@ package view;
 import controller.Repository;
 import model.*;
 
-
 public class WorkersView {
     public void printMenu(){
         System.out.println("MENU");
@@ -12,6 +11,7 @@ public class WorkersView {
         System.out.println("\t4. KOPIA ZAPASOWA");
         System.out.println("WYBÓR>");
     }
+
     public void printEmployeeList(Employee employee){
         System.out.println("1. LISTA PRACOWNIKÓW");
         separator();
