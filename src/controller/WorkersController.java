@@ -177,7 +177,7 @@ public class WorkersController {
             String input;
             boolean flagOperation = false;
             boolean flagCompressionType = false;
-            String fileName;
+            String  directoryName;
 
             System.out.println("4. KOPIA ZAPASOWA");
             System.out.println("[Z]achowaj / [O]dtwórz\t:");
@@ -204,10 +204,10 @@ public class WorkersController {
                     }
                 } while (true);
             }
-            System.out.println("Nazwa pliku: ");
-            fileName = scanForInput.nextLine();
+            System.out.println("Nazwa folderu: ");
+            directoryName = scanForInput.nextLine();
 
-            BackupService.start(flagOperation,flagCompressionType,fileName);
+            BackupService.start(flagOperation, flagCompressionType, directoryName);
         }
         catch (Exception e){
             System.out.println("error");
